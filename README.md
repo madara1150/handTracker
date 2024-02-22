@@ -10,9 +10,10 @@
 
 ## อ้างอิง
 
-[enter link description here](https://github.com/midnightcodex/HandTrackingModule/blob/main/HandTrackingModule.py)
-[enter link description here](https://www.youtube.com/watch?v=9iEPzbG-xLE)
-
+[Module HandTracking](https://github.com/midnightcodex/HandTrackingModule/blob/main/HandTrackingModule.py)
+[youtube handTracking](https://www.youtube.com/watch?v=9iEPzbG-xLE)
+[github ModelHandTracking](https://github.com/PriyanshChhabra0316/Sign-Language-detection)
+[Youtube](https://www.youtube.com/watch?v=EiNyiqx1u2E)
 
 
 
