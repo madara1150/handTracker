@@ -5,7 +5,7 @@
 
 # ขั้นตอนการ run
 
-    python3 VideoCapture.py
+    python3 main.py
 
 
 ## อ้างอิง
