@@ -5,7 +5,7 @@ import numpy as np
 import math
 from random import randrange
 import time
-import CheckImage as img
+import CheckImage as imgs
 
 offset = 20
 imgSize = 300
@@ -19,7 +19,7 @@ detector = HandDetector(maxHands=1)
 classifier = Classifier("Model/keras_model.h5" , "Model/labels.txt")
 
 labels = ["Hello","I love you","No","Okay","Please","Thank you","Yes"]
-all_img = img.get_filenames()
+all_img = imgs.get_filenames()
 
 while True:
     success, img = cap.read()
@@ -80,7 +80,9 @@ while True:
 
     # สร้าง text ขึ้นมาแสดงบนจอ
         # cv2.rectangle(imgOutput,(x-offset,y-offset-70),(x -offset+400, y - offset+60-50),(0,255,0),cv2.FILLED)  
-        cv2.putText(imgOutput,labels[index],(x,y-30),cv2.FONT_HERSHEY_COMPLEX,2,(0,0,0),2) 
+        cv2.putText(imgOutput,labels[index],(x,y-30),cv2.FONT_HERSHEY_COMPLEX,2,(0,0,0),2)
+        if labels[index] == "Thank you":
+            print("true ==================================")
         cv2.rectangle(imgOutput,(x-offset,y-offset),(x + w + offset, y+h + offset),(0,255,0),4)   
         
         # cv2.imshow('ImageCrop', imgCrop)
