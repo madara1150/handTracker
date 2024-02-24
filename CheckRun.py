@@ -3,32 +3,59 @@ from cvzone.HandTrackingModule import HandDetector
 from cvzone.ClassificationModule import Classifier
 import numpy as np
 import math
+from random import randrange
+import time
+import CheckImage as img
 
-cap = cv2.VideoCapture(0)
-detector = HandDetector(maxHands=1)
-classifier = Classifier("Model/keras_model.h5" , "Model/labels.txt")
 offset = 20
 imgSize = 300
 counter = 0
+previousTime = 0
+
+# เปิดกล้อง
+cap = cv2.VideoCapture(0)
+# ตรวจจับมือ
+detector = HandDetector(maxHands=1)
+classifier = Classifier("Model/keras_model.h5" , "Model/labels.txt")
 
 labels = ["Hello","I love you","No","Okay","Please","Thank you","Yes"]
-
+all_img = img.get_filenames()
 
 while True:
     success, img = cap.read()
     imgOutput = img.copy()
     hands, img = detector.findHands(img)
+
+    # FPS
+    currentTime = time.time()
+    fps = 1/(currentTime-previousTime)
+    previousTime = currentTime
+
+    # ถ้าเจอมือ
     if hands:
         hand = hands[0]
         x, y, w, h = hand['bbox']
 
         imgWhite = np.ones((imgSize, imgSize, 3), np.uint8)*255
-        imgCrop = img[y-offset:y + h + offset, x-offset:x + w + offset]
+        
+        # crop รูป
+        imgCrop = img[y-offset:y + h + offset + 100, x-offset:x + w  + offset]
+        imgCropSave = img[y-offset - 20:y + h + offset+ 20, x-offset-20:x + w  + offset+20]
+        
         imgCropShape = imgCrop.shape
 
+        # กด K เพื่อสร้างด่าน
+        key = cv2.waitKey(1) & 0xFF
+        if key == ord('k'):
+            filename = "image/cropped_image_{}.jpg".format(randrange(50))
+            filename2 = "image/full_image_{}.jpg".format(randrange(50))
+            cv2.imwrite(filename, imgCropSave)
+            cv2.imwrite(filename2, img)
+            print("Image saved as:", filename)
+
         aspectRatio = h / w
-        if not imgCrop.size:  # Check for empty image
-            print("ImageCrop is empty, skipping resizing and prediction.")
+        if not imgCrop.size:  # เช็ครูปว่าง
+            print("Error ======> หารูปไม่เจอหรือ resize ไม่ได้")
         else: 
             if aspectRatio > 1:
                 k = imgSize / h
@@ -49,14 +76,19 @@ while True:
                 imgWhite[hGap: hCal + hGap, :] = imgResize
                 prediction , index = classifier.getPrediction(imgWhite, draw= False)
 
-        cv2.rectangle(imgOutput,(x-offset,y-offset-70),(x -offset+400, y - offset+60-50),(0,255,0),cv2.FILLED)  
+        
 
+    # สร้าง text ขึ้นมาแสดงบนจอ
+        # cv2.rectangle(imgOutput,(x-offset,y-offset-70),(x -offset+400, y - offset+60-50),(0,255,0),cv2.FILLED)  
         cv2.putText(imgOutput,labels[index],(x,y-30),cv2.FONT_HERSHEY_COMPLEX,2,(0,0,0),2) 
         cv2.rectangle(imgOutput,(x-offset,y-offset),(x + w + offset, y+h + offset),(0,255,0),4)   
-
+        
         # cv2.imshow('ImageCrop', imgCrop)
         # cv2.imshow('ImageWhite', imgWhite)
 
+    # แสดง FPS
+    cv2.putText(imgOutput, f'FPS: {int(fps)}', (40,50), cv2.FONT_HERSHEY_COMPLEX, 1, (255, 0, 0), 3)
+    # แสดงหน้าจอ
     cv2.imshow('Image', imgOutput)
     cv2.waitKey(1)
     
