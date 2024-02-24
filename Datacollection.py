@@ -16,12 +16,12 @@ floder_check = 0
 # สร้างโฟร์ดเดอร์ที่ไม่มี
 while True:
     # ตรวจสอบว่าโฟลเดอร์มีอยู่หรือไม่
-        if not os.path.exists(f"img/{floder_check}"):
+        if not os.path.exists(f"data/{floder_check}"):
             imgs.create_floder(floder_check)
             break
         else:
             floder_check += 1
-folder = f'img/{floder_check}/'
+folder = f'data/{floder_check}/'
 
 while True:
     success, img = cap.read(1)
