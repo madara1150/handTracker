@@ -5,7 +5,7 @@ import numpy as np
 import math
 from random import randrange
 import time
-import CheckImage as imgs
+import tool as imgs
 
 offset = 20
 imgSize = 300

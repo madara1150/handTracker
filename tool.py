@@ -8,3 +8,9 @@ def get_filenames():
 
 def create_floder(name):
     os.makedirs(f"data/{name}")
+
+def check_folders():
+    folders = os.listdir("data/")
+    folders.sort()
+    labels_dict = {int(folder): folder for folder in folders}
+    return labels_dict
