@@ -16,10 +16,6 @@ def main():
     folder_crop_check = 0
     offset = 20
 
-    # path
-    folder = f'data/{floder_check}/'
-    folder_crop = f'crop/{floder_check}/'
-
     #text
     text = "Press S to save"
     counter_text = f'picture :{counter}'
@@ -33,7 +29,7 @@ def main():
                 break
             else:
                 floder_check += 1
-    
+
     # สร้างโฟร์ดเดอร์ที่ไม่มี Image Crop
     while True:
         # ตรวจสอบว่าโฟลเดอร์มีอยู่หรือไม่
@@ -42,6 +38,10 @@ def main():
                 break
             else:
                 folder_crop_check += 1
+
+    # path
+    folder = f'data/{floder_check}/'
+    folder_crop = f'crop/{folder_crop_check}/'
 
     while True:
 
@@ -66,7 +66,7 @@ def main():
             if hands:
                 counter += 1
                 cv2.imwrite(f'{folder}/{counter}.jpg', img)
-                print(counter)
+                print(f'จำนวนรูป : {counter} ,ที่เก็บ : {folder}')
                 counter_text = f'picture :{counter}'
                 error_text = ""
             else:
@@ -78,11 +78,12 @@ def main():
                 if hands:
                     hand = hands[0]
                     x, y, w, h = hand['bbox']
-                    imgCrop = img[y-offset:y + h + offset, x-offset:x + w + offset]
+                    imgCrop = img[y-offset :y + h + offset , x-offset :x + w + offset]
                     cv2.imwrite(f'{folder_crop}/{counter}.jpg', imgCrop)
+                    print(folder_crop)
                     text = "Please Press Q"
                 else:
-                    
+
                     # เมื่อไม่พบมือจะทำการลบ model ออก
                     files = os.listdir(folder)
                     files_crop = os.listdir(folder_crop)
