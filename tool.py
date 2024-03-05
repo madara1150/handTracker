@@ -9,6 +9,9 @@ def get_filenames():
 def create_floder(name):
     os.makedirs(f"data/{name}")
 
+def create_floder_crop(name):
+    os.makedirs(f"crop/{name}")
+
 def check_folders():
     folders = os.listdir("data/")
     folders.sort()
