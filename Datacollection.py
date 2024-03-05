@@ -66,7 +66,7 @@ def main():
             if hands:
                 counter += 1
                 cv2.imwrite(f'{folder}/{counter}.jpg', img)
-                print(f'จำนวนรูป : {counter} ,ที่เก็บ : {folder}')
+                print(f'จำนวนรูป : {counter} ที่เก็บ : {folder}')
                 counter_text = f'picture :{counter}'
                 error_text = ""
             else:
@@ -78,7 +78,7 @@ def main():
                 if hands:
                     hand = hands[0]
                     x, y, w, h = hand['bbox']
-                    imgCrop = img[y-offset :y + h + offset , x-offset :x + w + offset]
+                    imgCrop = img[y-offset -50 :y + h + offset+50 , x-offset-50 :x + w + offset+50]
                     cv2.imwrite(f'{folder_crop}/{counter}.jpg', imgCrop)
                     print(folder_crop)
                     text = "Please Press Q"
