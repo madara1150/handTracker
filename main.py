@@ -8,6 +8,7 @@ import tool
 import tkinter as tk
 
 def run():
+    window.destroy()
     model_dict = pickle.load(open('./model.p', 'rb'))
     model = model_dict['model']
     cap = cv2.VideoCapture(1)
@@ -81,9 +82,11 @@ def run():
     cv2.destroyAllWindows()
 
 def create_map():
+    window.destroy()
     create.main()
 
 def create_gui():
+    global window
     window = tk.Tk()
     window.title("FINGER FOCUS")
     window.resizable(True, True)
@@ -93,10 +96,9 @@ def create_gui():
     run_button = tk.Button(window, text="START", command=run, fg="black", bg="green")
     create_button = tk.Button(window, text="CREATE", command=create_map, fg="black", bg="white")
 
-    run_button.pack(side=tk.LEFT, padx=10, pady=10)
-    create_button.pack(side=tk.RIGHT, padx=10, pady=10)
+    run_button.pack(padx=10, pady=10)
+    create_button.pack(padx=10, pady=10)
 
     window.mainloop()
 
 create_gui()
-

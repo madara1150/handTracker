@@ -20,6 +20,7 @@ def main():
     text = "Press S to save"
     counter_text = f'picture :{counter}'
     error_text = ""
+    print("hello")
 
     # สร้างโฟร์ดเดอร์ที่ไม่มี Data
     while True:
