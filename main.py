@@ -5,6 +5,7 @@ import mediapipe as mp
 import numpy as np
 import Datacollection as create
 import tool
+import tkinter as tk
 
 def run():
     model_dict = pickle.load(open('./model.p', 'rb'))
@@ -79,10 +80,23 @@ def run():
     cap.release()
     cv2.destroyAllWindows()
 
-check = input()
-if check == "1":
+def create_map():
     create.main()
-if check == "run":
-    run()
 
+def create_gui():
+    window = tk.Tk()
+    window.title("FINGER FOCUS")
+    window.resizable(True, True)
+
+    window.geometry("700x800")
+
+    run_button = tk.Button(window, text="START", command=run, fg="black", bg="green")
+    create_button = tk.Button(window, text="CREATE", command=create_map, fg="black", bg="white")
+
+    run_button.pack(side=tk.LEFT, padx=10, pady=10)
+    create_button.pack(side=tk.RIGHT, padx=10, pady=10)
+
+    window.mainloop()
+
+create_gui()
 
