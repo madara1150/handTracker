@@ -18,9 +18,8 @@ def main():
 
     #text
     text = "Press S to save"
-    counter_text = f'picture :{counter}'
+    counter_text = f'picture :{counter}/71'
     error_text = ""
-    print("hello")
 
     # สร้างโฟร์ดเดอร์ที่ไม่มี Data
     while True:
@@ -68,7 +67,7 @@ def main():
                 counter += 1
                 cv2.imwrite(f'{folder}/{counter}.jpg', img)
                 print(f'จำนวนรูป : {counter} ที่เก็บ : {folder}')
-                counter_text = f'picture :{counter}'
+                counter_text = f'picture :{counter}/71'
                 error_text = ""
             else:
                 error_text = "no hand pls again"
@@ -83,6 +82,8 @@ def main():
                     cv2.imwrite(f'{folder_crop}/{counter}.jpg', imgCrop)
                     print(folder_crop)
                     text = "Please Press Q"
+                elif counter == 71:
+                    error_text = "success!"
                 else:
 
                     # เมื่อไม่พบมือจะทำการลบ model ออก
