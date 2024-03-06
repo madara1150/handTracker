@@ -7,20 +7,21 @@ import Datacollection as create
 import tool
 import tkinter as tk
 import tkinter.font as tkFont
+import time as tm
+import threading
 
-def run():
+
+def run(time):
     model_dict = pickle.load(open('./model.p', 'rb'))
     model = model_dict['model']
     cap = cv2.VideoCapture(1)
     mp_hands = mp.solutions.hands
     mp_drawing = mp.solutions.drawing_utils
     mp_drawing_styles = mp.solutions.drawing_styles
-
     hands = mp_hands.Hands(static_image_mode=True, min_detection_confidence=0.3)
-
     labels_dict = tool.check_folders()
     while True:
-
+        
         data_aux = []
         x_ = []
         y_ = []
@@ -33,7 +34,8 @@ def run():
         H, W, _ = frame.shape
 
         frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-
+        cv2.putText(frame, "hello", (600,50), cv2.FONT_HERSHEY_SIMPLEX, 1.3, (0, 0, 0), 3,
+                        cv2.LINE_AA)
         results = hands.process(frame_rgb)
         if results.multi_hand_landmarks:
             for hand_landmarks in results.multi_hand_landmarks:
@@ -75,7 +77,8 @@ def run():
             cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 0), 4)
             cv2.putText(frame, predicted_character, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 1.3, (0, 0, 0), 3,
                         cv2.LINE_AA)
-
+            
+        
         cv2.imshow('frame', frame)
         cv2.waitKey(1)
     cap.release()
