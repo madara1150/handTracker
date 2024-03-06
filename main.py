@@ -93,12 +93,25 @@ def create_gui():
 
     window.geometry("700x800")
 
-    run_button = tk.Button(window, text="START", command=run, fg="black", bg="green")
-    create_button = tk.Button(window, text="CREATE", command=create_map, fg="black", bg="white")
+    # สร้าง frame หลักสำหรับจัดเรียงปุ่ม
+    main_frame = tk.Frame(window)
+    main_frame.pack(expand=True, fill="both")
 
-    run_button.pack(padx=10, pady=10)
-    create_button.pack(padx=10, pady=10)
+    # ปรับแต่ง layout ของ frame หลัก
+    main_frame.columnconfigure(0, weight=1)
+    main_frame.columnconfigure(1, weight=1)
+    main_frame.rowconfigure(0, weight=1)
+    main_frame.rowconfigure(1, weight=1)
+
+    # สร้างปุ่ม "START" และ "CREATE"
+    run_button = tk.Button(main_frame, text="START", command=run, fg="black", bg="green")
+    create_button = tk.Button(main_frame, text="CREATE", command=create_map, fg="black", bg="white")
+
+    # วางปุ่ม "START" และ "CREATE" ใน frame หลัก
+    run_button.grid(row=0, column=0, sticky="nsew")
+    create_button.grid(row=1, column=0, sticky="nsew")
 
     window.mainloop()
+
 
 create_gui()
