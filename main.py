@@ -18,25 +18,25 @@ class App:
         GLabel_318["text"] = "FINGER FOCUS"
         GLabel_318.place(x=160,y=60,width=365,height=161)
 
-        GButton_999=tk.Button(root)
-        GButton_999["bg"] = "#067a16"
+        start_btn=tk.Button(root)
+        start_btn["bg"] = "#067a16"
         ft = tkFont.Font(family='Times',size=28)
-        GButton_999["font"] = ft
-        GButton_999["fg"] = "#ffffff"
-        GButton_999["justify"] = "center"
-        GButton_999["text"] = "START"
-        GButton_999.place(x=250,y=340,width=167,height=61)
-        GButton_999["command"] = self.started
+        start_btn["font"] = ft
+        start_btn["fg"] = "#ffffff"
+        start_btn["justify"] = "center"
+        start_btn["text"] = "START"
+        start_btn.place(x=250,y=340,width=167,height=61)
+        start_btn["command"] = self.started
 
-        GButton_748=tk.Button(root)
-        GButton_748["bg"] = "#a29d9d"
+        create_btn=tk.Button(root)
+        create_btn["bg"] = "#a29d9d"
         ft = tkFont.Font(family='Times',size=28)
-        GButton_748["font"] = ft
-        GButton_748["fg"] = "#ffffff"
-        GButton_748["justify"] = "center"
-        GButton_748["text"] = "CREATE"
-        GButton_748.place(x=250,y=440,width=166,height=57)
-        GButton_748["command"] = self.create
+        create_btn["font"] = ft
+        create_btn["fg"] = "#ffffff"
+        create_btn["justify"] = "center"
+        create_btn["text"] = "CREATE"
+        create_btn.place(x=250,y=440,width=166,height=57)
+        create_btn["command"] = self.create
 
     def started(self):
         root.destroy()
