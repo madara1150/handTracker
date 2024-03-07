@@ -3,7 +3,7 @@ import numpy as np
 import Datacollection as create
 import tkinter as tk
 import tkinter.font as tkFont
-import start
+import startGame as start
 
 class App:
     def __init__(self, root):
