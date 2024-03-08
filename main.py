@@ -40,7 +40,7 @@ class App:
 
     def started(self):
         root.destroy()
-        start.run(180)
+        start.run()
 
 
     def create(self):

@@ -1,6 +1,7 @@
 import os
 import pickle
 import cv2
+from sklearn.ensemble import RandomForestClassifier
 import mediapipe as mp
 import numpy as np
 import Datacollection as create
@@ -12,10 +13,10 @@ import threading
 
 
 
-def run(time):
+def run():
     overlay_image = cv2.imread('crop/0/70.jpg')
     model_dict = pickle.load(open('./model.p', 'rb'))
-    model = model_dict['model']
+    model = model_dict['model']  
     cap = cv2.VideoCapture(1)
     mp_hands = mp.solutions.hands
     hands = mp_hands.Hands(static_image_mode=True, min_detection_confidence=0.3)
@@ -69,13 +70,14 @@ def run(time):
             # ตัวอักษรบอก level
             predicted_character = labels_dict[int(prediction[0])]
 
-            # ทดสอบปิด
+            # if labels_dict[int(prediction[0])] == str(level_currrent) and labels_dict[int(prediction[0])] > level:
+            #     print("label เช็ค : ",labels_dict[int(prediction[0])])
+            #     level_currrent += 1
+            #     overlay_image = cv2.imread(f'crop/{level_currrent}/70.jpg')
+
+            if labels_dict[int(prediction[0])] == "0":
+                overlay_image = cv2.imread('crop/1/70.jpg')
             
-            if labels_dict[int(prediction[0])] == str(level_currrent) and labels_dict[int(prediction[0])] > level:
-                print("label เช็ค : ",labels_dict[int(prediction[0])])
-                level_currrent += 1
-                overlay_image = cv2.imread(f'crop/{level_currrent}/70.jpg')
-                
             cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 0), 4)
             cv2.putText(frame, predicted_character, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 1.3, (0, 0, 0), 3,
                         cv2.LINE_AA)
