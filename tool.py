@@ -17,3 +17,9 @@ def check_folders():
     folders.sort()
     labels_dict = {int(folder): folder for folder in folders}
     return labels_dict
+
+def get_fileCrop():
+    filenames = []
+    for filename in os.listdir("crop"):
+        filenames.append(filename)
+    return filenames

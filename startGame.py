@@ -21,6 +21,9 @@ def run(time):
     hands = mp_hands.Hands(static_image_mode=True, min_detection_confidence=0.3)
     labels_dict = tool.check_folders()
 
+    level = tool.get_fileCrop()
+    level_currrent = 0
+    print("level : ", level_currrent)
     while True:
         
         data_aux = []
@@ -67,9 +70,12 @@ def run(time):
             predicted_character = labels_dict[int(prediction[0])]
 
             # ทดสอบปิด
-            if labels_dict[int(prediction[0])] == "0":
-                overlay_image = cv2.imread('crop/1/70.jpg')
-
+            
+            if labels_dict[int(prediction[0])] == str(level_currrent) and labels_dict[int(prediction[0])] > level:
+                print("label เช็ค : ",labels_dict[int(prediction[0])])
+                level_currrent += 1
+                overlay_image = cv2.imread(f'crop/{level_currrent}/70.jpg')
+                
             cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 0), 4)
             cv2.putText(frame, predicted_character, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 1.3, (0, 0, 0), 3,
                         cv2.LINE_AA)
