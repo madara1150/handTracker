@@ -74,6 +74,7 @@ def main():
 
             # ให้บันทึกรุปแค่ 70 ภาพ
             if counter == 70:
+
                 # ตรวจสอบรูป
                 if hands:
                     hand = hands[0]
@@ -82,8 +83,10 @@ def main():
                     cv2.imwrite(f'{folder_crop}/{counter}.jpg', imgCrop)
                     print(folder_crop)
                     text = "Please Press Q"
+
                 elif counter == 71:
                     error_text = "success!"
+                    
                 else:
 
                     # เมื่อไม่พบมือจะทำการลบ model ออก
