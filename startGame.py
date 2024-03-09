@@ -103,7 +103,7 @@ def run():
 
         # นับเวลาถ่อยหลัง
         time_left = duration - (time.time() - start_time)
-        cv2.putText(frame, f"Time left: {int(time_left)}s", (10, 50), 
+        cv2.putText(frame, f"Time left: {int(time_left)}s", (900, 50), 
                 cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), 2)
         
         cv2.imshow('frame', frame)

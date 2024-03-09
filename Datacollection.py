@@ -86,7 +86,7 @@ def main():
 
                 elif counter == 71:
                     error_text = "success!"
-                    
+
                 else:
 
                     # เมื่อไม่พบมือจะทำการลบ model ออก
