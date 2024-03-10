@@ -12,7 +12,7 @@ import time as tm
 import threading
 import time
 
-def run():
+def run(timeout):
     # รูป crop
     overlay_image = cv2.imread('crop/0/70.jpg')
 
@@ -35,7 +35,11 @@ def run():
 
     # เวลา
     start_time = time.time() 
-    duration = 10
+    duration = timeout
+
+    #text
+    text = ""
+    time_text = ""
 
     while True:
         
@@ -45,13 +49,13 @@ def run():
 
         ret, frame = cap.read()
         if not ret:
-            print("Error: Unable to capture frame from camera")
+            print("Error: ไม่พบกล้อง")
             break
         
         H, W, _ = frame.shape
 
         frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        cv2.putText(frame, "hello", (600,50), cv2.FONT_HERSHEY_SIMPLEX, 1.3, (0, 0, 0), 3,
+        cv2.putText(frame, str(level_currrent), (600,50), cv2.FONT_HERSHEY_SIMPLEX, 1.3, (0, 0, 0), 3,
                         cv2.LINE_AA)
         
         results = hands.process(frame_rgb)
@@ -85,31 +89,39 @@ def run():
             # ตัวอักษรบอก level
             predicted_character = labels_dict[int(prediction[0])]
 
-            # if labels_dict[int(prediction[0])] == str(level_currrent) and labels_dict[int(prediction[0])] > level:
-            #     print("label เช็ค : ",labels_dict[int(prediction[0])])
-            #     level_currrent += 1
-            #     overlay_image = cv2.imread(f'crop/{level_currrent}/70.jpg')
-            
             # เช็คด่าน
-            if labels_dict[int(prediction[0])] == "0":
-                overlay_image = cv2.imread('crop/1/70.jpg')
-            
+            if labels_dict[int(prediction[0])] == str(level_currrent):
+                text = "nice!!"
+                time.sleep(1)
+                
+                # ไปเลเวลถัดไป
+                if level_currrent + 1 < len(level):
+                    level_currrent += 1
+                    overlay_image = cv2.imread(f'crop/{level_currrent}/70.jpg')
+
+                # เลเวลสุดท้าย
+                else:
+                    time_text = f'time : {timeout}s time played: {int(duration-time_left)}s'
+                    print(f"เวลาที่เลือก :{duration} วินาที สถิตของคุณที่ทำได้คือ {int(duration-time_left)} วินาที")
+
             # put Text กับ box
             cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 0), 4)
-            cv2.putText(frame, predicted_character, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 1.3, (0, 0, 0), 3,
+            cv2.putText(frame, text, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 1.3, (0, 0, 0), 3,
                         cv2.LINE_AA)
-            
+            text = ""
             cv2.imshow("overlay", overlay_image)
 
         # นับเวลาถ่อยหลัง
         time_left = duration - (time.time() - start_time)
         cv2.putText(frame, f"Time left: {int(time_left)}s", (900, 50), 
                 cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), 2)
-        
+        cv2.putText(frame, time_text, (900, 100), 
+                            cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 255, 0), 2)
+
         cv2.imshow('frame', frame)
 
-        # เวลาหมด
         if time_left <= 0:
+            time_text = f'time played: time out!!'
             break
 
         cv2.waitKey(1)
