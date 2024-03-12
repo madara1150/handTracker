@@ -12,7 +12,8 @@ import time as tm
 import threading
 import time
 
-def run(timeout):
+def run():
+    timeout = int(input("กรุณากรอกเวลาที่ต้องการเป็นตัวเลข(วินาที) :"))
     # รูป crop
     overlay_image = cv2.imread('crop/0/70.jpg')
 
@@ -31,7 +32,6 @@ def run(timeout):
     # ด่าน
     level = tool.get_fileCrop()
     level_currrent = 0
-    print("level : ", level_currrent)
 
     # เวลา
     start_time = time.time() 
@@ -52,6 +52,8 @@ def run(timeout):
             print("Error: ไม่พบกล้อง")
             break
         
+        key = cv2.waitKey(1)
+
         H, W, _ = frame.shape
 
         frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -102,7 +104,6 @@ def run(timeout):
                 # เลเวลสุดท้าย
                 else:
                     time_text = f'time : {timeout}s time played: {int(duration-time_left)}s'
-                    
 
             # put Text กับ box
             cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 0), 4)
@@ -119,11 +120,17 @@ def run(timeout):
                             cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 255, 0), 2)
 
         cv2.imshow('frame', frame)
-
+        if level_currrent == len(level):
+            cv2.putText(frame, "press Q", (800, 150), 
+                            cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 0, 255), 2)
         if time_left <= 0:
             time_text = f'time played: time out!!'
+            print(f'คุณเล่นถึงด่าน : {level_currrent} ใช้เวลาทั้งหมด : {int(duration-time_left)} วินาที')
             break
 
-        cv2.waitKey(1)
+        if key == ord("q"):
+            print(f'คุณเล่นถึงด่าน : {level_currrent} ใช้เวลาทั้งหมด : {int(duration-time_left)} วินาที')
+            break
+
     cap.release()
     cv2.destroyAllWindows()

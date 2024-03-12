@@ -6,9 +6,10 @@ import tool
 import os
 import create_dataset as dataset
 
-def main():
+def create():
     cap = cv2.VideoCapture(1)
     detector = HandDetector(maxHands=1)
+
 
     # constant
     counter = 0
@@ -49,11 +50,13 @@ def main():
         hands, img = detector.findHands(img)
 
         # text แสดงบนหน้าจอ
-        cv2.putText(img,text, (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1.3, (0, 0, 0), 3,
+        cv2.putText(img,f'create : {floder_check}', (1000, 50), cv2.FONT_HERSHEY_SIMPLEX, 1.3, (0, 213, 255), 3,
                         cv2.LINE_AA)
-        cv2.putText(img,counter_text, (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 1.3, (0, 0, 0), 3,
+        cv2.putText(img,text, (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1.3, (0, 213, 255), 3,
                         cv2.LINE_AA)
-        cv2.putText(img,error_text, (50, 150), cv2.FONT_HERSHEY_SIMPLEX, 1.3, (0, 0, 0), 3,
+        cv2.putText(img,counter_text, (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 1.3, (255, 0, 0), 3,
+                        cv2.LINE_AA)
+        cv2.putText(img,error_text, (50, 150), cv2.FONT_HERSHEY_SIMPLEX, 1.3, (9, 0, 255), 3,
                         cv2.LINE_AA)
         
         cv2.imshow('Image', img)
