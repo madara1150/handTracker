@@ -102,7 +102,7 @@ def run(timeout):
                 # เลเวลสุดท้าย
                 else:
                     time_text = f'time : {timeout}s time played: {int(duration-time_left)}s'
-                    print(f"เวลาที่เลือก :{duration} วินาที สถิตของคุณที่ทำได้คือ {int(duration-time_left)} วินาที")
+                    
 
             # put Text กับ box
             cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 0), 4)
@@ -115,7 +115,7 @@ def run(timeout):
         time_left = duration - (time.time() - start_time)
         cv2.putText(frame, f"Time left: {int(time_left)}s", (900, 50), 
                 cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), 2)
-        cv2.putText(frame, time_text, (900, 100), 
+        cv2.putText(frame, time_text, (800, 100), 
                             cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 255, 0), 2)
 
         cv2.imshow('frame', frame)
