@@ -19,7 +19,7 @@ def create():
 
     #text
     text = "Press S to save"
-    counter_text = f'picture :{counter}/71'
+    counter_text = f'picture :{counter}/100'
     error_text = ""
 
     # สร้างโฟร์ดเดอร์ที่ไม่มี Data
@@ -63,20 +63,20 @@ def create():
         key = cv2.waitKey(1)
 
         # save รูป
-        if key == ord("s") and counter <= 70:
+        if key == ord("s") and counter <= 99:
             
             # ตรวจสอบมือ ตอน บันทึกภาพ
             if hands:
                 counter += 1
                 cv2.imwrite(f'{folder}/{counter}.jpg', img)
                 print(f'จำนวนรูป : {counter} ที่เก็บ : {folder}')
-                counter_text = f'picture :{counter}/71'
+                counter_text = f'picture :{counter}/100'
                 error_text = ""
             else:
                 error_text = "no hand pls again"
 
             # ให้บันทึกรุปแค่ 70 ภาพ
-            if counter == 70:
+            if counter == 99:
 
                 # ตรวจสอบรูป
                 if hands:
@@ -87,7 +87,7 @@ def create():
                     print(folder_crop)
                     text = "Please Press Q"
 
-                elif counter == 71:
+                elif counter == 100:
                     error_text = "success!"
 
                 else:

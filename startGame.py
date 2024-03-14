@@ -11,11 +11,13 @@ import tkinter.font as tkFont
 import time as tm
 import threading
 import time
+import datetime
 
 def run():
+    player_name = input("กรุณากรอกชื่อ :")
     timeout = int(input("กรุณากรอกเวลาที่ต้องการเป็นตัวเลข(วินาที) :"))
     # รูป crop
-    overlay_image = cv2.imread('crop/0/70.jpg')
+    overlay_image = cv2.imread('crop/0/99.jpg')
 
     # ดึงค่าโมเดล
     model_dict = pickle.load(open('./model.p', 'rb'))
@@ -40,6 +42,7 @@ def run():
     #text
     text = ""
     time_text = ""
+    text_end = ""
 
     while True:
         
@@ -99,11 +102,12 @@ def run():
                 # ไปเลเวลถัดไป
                 if level_currrent + 1 < len(level):
                     level_currrent += 1
-                    overlay_image = cv2.imread(f'crop/{level_currrent}/70.jpg')
+                    overlay_image = cv2.imread(f'crop/{level_currrent}/99.jpg')
 
                 # เลเวลสุดท้าย
                 else:
                     time_text = f'time : {timeout}s time played: {int(duration-time_left)}s'
+                    text_end = 'press Q to close'
 
             # put Text กับ box
             cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 0), 4)
@@ -118,6 +122,8 @@ def run():
                 cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), 2)
         cv2.putText(frame, time_text, (800, 100), 
                             cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 255, 0), 2)
+        cv2.putText(frame, text_end, (800, 150), 
+                            cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 255, 180), 2)
 
         cv2.imshow('frame', frame)
         if level_currrent == len(level):
@@ -129,6 +135,7 @@ def run():
             break
 
         if key == ord("q"):
+            tool.write_to_file(f'ชื่อ : {player_name} เล่นถึงด่าน : {level_currrent} เวลาทั้งหมด {timeout} วินาที ใช้เวลาไป {int(duration-time_left)} วินาที เล่นเมื่อเวลา : {datetime.datetime.now():%Y-%m-%d %H:%M:%S}')
             print(f'คุณเล่นถึงด่าน : {level_currrent} ใช้เวลาทั้งหมด : {int(duration-time_left)} วินาที')
             break
 

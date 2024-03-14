@@ -23,3 +23,7 @@ def get_fileCrop():
     for filename in os.listdir("crop"):
         filenames.append(filename)
     return filenames
+
+def write_to_file(text):
+    with open("บันทึกการเล่น.txt", "a", encoding="utf-8") as f:
+        f.write(text + "\n")
