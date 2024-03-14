@@ -130,6 +130,7 @@ def run():
             cv2.putText(frame, "press Q", (800, 150), 
                             cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 0, 255), 2)
         if time_left <= 0:
+            tool.write_to_file(f'ชื่อ : {player_name} เล่นถึงด่าน : {level_currrent} เวลาทั้งหมด {timeout} วินาที ใช้เวลาไป {int(duration-time_left)} วินาที เล่นเมื่อเวลา : {datetime.datetime.now():%Y-%m-%d %H:%M:%S}')
             time_text = f'time played: time out!!'
             print(f'คุณเล่นถึงด่าน : {level_currrent} ใช้เวลาทั้งหมด : {int(duration-time_left)} วินาที')
             break
